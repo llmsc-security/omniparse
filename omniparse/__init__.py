@@ -47,13 +47,20 @@ def load_omnimodel(load_documents: bool, load_media: bool, load_web: bool):
         print("[LOG] ✅ Loading OCR Model")
         shared_state.model_list = load_all_models()
         print("[LOG] ✅ Loading Vision Model")
-        # if device == "cuda":
-        shared_state.vision_model = AutoModelForCausalLM.from_pretrained(
-            "microsoft/Florence-2-base", trust_remote_code=True
-        ).to(device)
-        shared_state.vision_processor = AutoProcessor.from_pretrained(
-            "microsoft/Florence-2-base", trust_remote_code=True
-        )
+        # Try to load vision model (Florence-2), skip if flash-attn is not available
+        try:
+            shared_state.vision_model = AutoModelForCausalLM.from_pretrained(
+                "microsoft/Florence-2-base", trust_remote_code=True
+            ).to(device)
+            shared_state.vision_processor = AutoProcessor.from_pretrained(
+                "microsoft/Florence-2-base", trust_remote_code=True
+            )
+            print("[LOG] ✅ Vision Model loaded successfully")
+        except Exception as e:
+            print(f"[LOG] ⚠️  Failed to load Vision Model: {str(e)}")
+            print("[LOG] 📌 Vision model features will be disabled. Install flash-attn to enable vision model support.")
+            shared_state.vision_model = None
+            shared_state.vision_processor = None
 
     if load_media:
         print("[LOG] ✅ Loading Audio Model")
