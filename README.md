@@ -360,3 +360,21 @@ document = parser.load_data('path/to/document.pdf')
 parser.save_to_markdown(document)
 ```
  -->
+
+
+
+
+
+---
+
+## Docker Deployment
+
+This repository has been Dockerized for easy deployment.
+
+- **Official Repository**: [adithya-s-k/omniparse](https://github.com/adithya-s-k/omniparse)
+- **Dockerized by**: [llmsc-security](https://github.com/llmsc-security)
+- **Docker Image**: `adithya-s-k--omniparse_image`
+- **Container**: `adithya-s-k--omniparse_container`
+- **HTTP Service**: `http://127.0.0.1:11090`
+
+For Docker deployment and port mapping details, please visit our [Docker Directory](https://github.com/llmsc-security/docker-yuelin).
